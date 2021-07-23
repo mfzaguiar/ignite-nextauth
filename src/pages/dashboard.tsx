@@ -5,9 +5,14 @@ import { AuthContext } from '../contexts/AuthContext';
 import { setupAPIClient } from '../service/api';
 import { api } from '../service/apiClient';
 import { withSSRAuth } from '../utils/withSSRAuth';
+import { useCan } from '../hooks/useCan';
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
+
+  const userCanSeeMetrics = useCan({
+    roles: ['administrator', 'editor'],
+  });
 
   useEffect(() => {
     api.get('/me').then((response) => console.log(response));
@@ -15,9 +20,10 @@ export default function Dashboard() {
 
   return (
     <Flex w="100vw" h="100vh" align="center" justify="center">
-      <StackItem>
+      <StackItem experimental_spaceY={4}>
         <Text>Dashboard</Text>
         <Text>{user?.email}</Text>
+        {userCanSeeMetrics && <Text>Pode ver Métricas</Text>}
       </StackItem>
     </Flex>
   );
