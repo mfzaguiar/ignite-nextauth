@@ -1,7 +1,5 @@
-import { GetServerSideProps } from 'next';
 import { Flex, Button, Stack } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import { parseCookies } from 'nookies';
 import { yupResolver } from '@hookform/resolvers/yup';
 import * as yup from 'yup';
 
