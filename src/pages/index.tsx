@@ -1,11 +1,14 @@
+import { GetServerSideProps } from 'next';
 import { Flex, Button, Stack } from '@chakra-ui/react';
 import { SubmitHandler, useForm } from 'react-hook-form';
-import * as yup from 'yup';
+import { parseCookies } from 'nookies';
 import { yupResolver } from '@hookform/resolvers/yup';
+import * as yup from 'yup';
 
 import { Input } from '../components/Form/Input';
 import { useContext } from 'react';
 import { AuthContext } from '../contexts/AuthContext';
+import { withSSRGuest } from '../utils/withSSRGuest';
 
 type signInFormData = {
   email: string;
@@ -71,3 +74,9 @@ export default function SignIn() {
     </Flex>
   );
 }
+
+export const getServerSideProps = withSSRGuest(async (ctx) => {
+  return {
+    props: {},
+  };
+});
