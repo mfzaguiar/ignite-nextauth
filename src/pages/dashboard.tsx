@@ -1,5 +1,6 @@
 import { useContext, useEffect } from 'react';
-import { Flex, StackItem, Text } from '@chakra-ui/react';
+import { Flex, StackItem, Text, Link as ChakraLink } from '@chakra-ui/react';
+import Link from 'next/link';
 
 import { AuthContext } from '../contexts/AuthContext';
 import { setupAPIClient } from '../service/api';
@@ -24,7 +25,17 @@ export default function Dashboard() {
       <StackItem experimental_spaceY={4}>
         <Text>Dashboard</Text>
         <Text>{user?.email}</Text>
-        {userCanSeeMetrics && <Text>Pode ver Métricas</Text>}
+        {userCanSeeMetrics && (
+          <StackItem border="1px" padding={2}>
+            <Text>Pode ver Métricas</Text>
+
+            <Link href="/metrics" passHref>
+              <ChakraLink>
+                <Text>Ir Métricas</Text>
+              </ChakraLink>
+            </Link>
+          </StackItem>
+        )}
         <Can permissions={['metrics.list']}>
           <Text>Pode ver Componente</Text>
         </Can>
