@@ -1,5 +1,11 @@
 import { useContext, useEffect } from 'react';
-import { Flex, StackItem, Text, Link as ChakraLink } from '@chakra-ui/react';
+import {
+  Flex,
+  StackItem,
+  Text,
+  Link as ChakraLink,
+  Button,
+} from '@chakra-ui/react';
 import Link from 'next/link';
 
 import { AuthContext } from '../contexts/AuthContext';
@@ -10,11 +16,15 @@ import { useCan } from '../hooks/useCan';
 import { Can } from '../components/Can';
 
 export default function Dashboard() {
-  const { user } = useContext(AuthContext);
+  const { user, signOut } = useContext(AuthContext);
 
   const userCanSeeMetrics = useCan({
     roles: ['administrator', 'editor'],
   });
+
+  function handleSignOut() {
+    signOut();
+  }
 
   useEffect(() => {
     api.get('/me').then((response) => console.log(response));
@@ -39,6 +49,15 @@ export default function Dashboard() {
         <Can permissions={['metrics.list']}>
           <Text>Pode ver Componente</Text>
         </Can>
+
+        <Button
+          type="button"
+          background="blue.600"
+          _hover={{ bg: 'blue.500' }}
+          onClick={handleSignOut}
+        >
+          Logout
+        </Button>
       </StackItem>
     </Flex>
   );
