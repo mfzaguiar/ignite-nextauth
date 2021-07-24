@@ -6,6 +6,7 @@ import { setupAPIClient } from '../service/api';
 import { api } from '../service/apiClient';
 import { withSSRAuth } from '../utils/withSSRAuth';
 import { useCan } from '../hooks/useCan';
+import { Can } from '../components/Can';
 
 export default function Dashboard() {
   const { user } = useContext(AuthContext);
@@ -24,6 +25,9 @@ export default function Dashboard() {
         <Text>Dashboard</Text>
         <Text>{user?.email}</Text>
         {userCanSeeMetrics && <Text>Pode ver Métricas</Text>}
+        <Can permissions={['metrics.list']}>
+          <Text>Pode ver Componente</Text>
+        </Can>
       </StackItem>
     </Flex>
   );
